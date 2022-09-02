@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">TruBlog App</string>
+    <string name="first_req_title">Truecaller 10th Character Request</string>
+    <string name="second_req_title">Truecaller Every 10th Character Request</string>
+    <string name="third_req_title">Truecaller Word Counter Request</string>
+    <string name="fetch_blog_content">Fetch Blog Content</string>
+
+</resources>

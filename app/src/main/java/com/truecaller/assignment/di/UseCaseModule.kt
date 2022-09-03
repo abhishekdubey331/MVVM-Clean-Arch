@@ -14,7 +14,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import kotlinx.coroutines.CoroutineDispatcher
-import javax.inject.Singleton
 
 @InstallIn(ViewModelComponent::class)
 @Module

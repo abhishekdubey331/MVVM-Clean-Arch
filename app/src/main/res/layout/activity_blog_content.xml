@@ -14,7 +14,7 @@
         tools:context=".ui.BlogContentActivity">
 
         <Button
-            android:id="@+id/fetchBlogContentBtn"
+            android:id="@+id/button_blogScreen_fetchContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/side_margin"
@@ -25,15 +25,15 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/errorTextView"
+            android:id="@+id/textview_error_blogScreen"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textColor="@color/design_default_color_error"
-            app:layout_constraintTop_toBottomOf="@id/fetchBlogContentBtn" />
+            app:layout_constraintTop_toBottomOf="@id/button_blogScreen_fetchContent" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/firstTvTitle"
+            android:id="@+id/textview_blogScreen_10thCharTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/side_margin"
@@ -41,58 +41,58 @@
             android:text="@string/first_req_title"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/errorTextView" />
+            app:layout_constraintTop_toBottomOf="@id/textview_error_blogScreen" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/resultFirstTv"
+            android:id="@+id/textview_blogScreen_10thCharContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/side_margin"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/firstTvTitle"
+            app:layout_constraintTop_toBottomOf="@id/textview_blogScreen_10thCharTitle"
             tools:text="@string/app_name" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/secondTvTitle"
+            android:id="@+id/textview_blogScreen_every10thCharTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/side_margin"
             android:text="@string/second_req_title"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/resultFirstTv" />
+            app:layout_constraintTop_toBottomOf="@id/textview_blogScreen_10thCharContent" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/resultSecondTv"
+            android:id="@+id/textview_blogScreen_every10thCharContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/side_margin"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/secondTvTitle"
+            app:layout_constraintTop_toBottomOf="@id/textview_blogScreen_every10thCharTitle"
             tools:text="@string/app_name" />
 
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/thirdTvTitle"
+            android:id="@+id/textview_blogScreen_wordCounterTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/side_margin"
             android:text="@string/third_req_title"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/resultSecondTv" />
+            app:layout_constraintTop_toBottomOf="@id/textview_blogScreen_every10thCharContent" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/resultThirdTv"
+            android:id="@+id/textview_blogScreen_wordCounterContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/side_margin"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/thirdTvTitle"
+            app:layout_constraintTop_toBottomOf="@id/textview_blogScreen_wordCounterTitle"
             tools:text="@string/app_name" />
 
         <ProgressBar
-            android:id="@+id/progressBar"
+            android:id="@+id/progressBar_blogScreen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -21,7 +21,7 @@ class BlogContentActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityBlogContentBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.fetchBlogContentBtn.setOnClickListener {
+        binding.buttonBlogScreenFetchContent.setOnClickListener {
             blogContentViewModel.getNthChar(10)
             blogContentViewModel.getEveryNthChar(10)
             blogContentViewModel.getWordCounter()
@@ -38,17 +38,17 @@ class BlogContentActivity : AppCompatActivity() {
     }
 
     private fun updateContent(uiState: BlogContentScreenState) {
-        binding.resultFirstTv.text = uiState.nthChar.toString()
-        binding.resultSecondTv.text = uiState.everyNthChar
-        binding.resultThirdTv.text = uiState.wordCount
-        binding.errorTextView.text = uiState.message
+        binding.textviewBlogScreen10thCharContent.text = uiState.nthChar.toString()
+        binding.textviewBlogScreenEvery10thCharContent.text = uiState.everyNthChar
+        binding.textviewBlogScreenWordCounterContent.text = uiState.wordCount
+        binding.textviewErrorBlogScreen.text = uiState.message
     }
 
     private fun updateLoadingState(loading: Boolean) {
         if (loading) {
-            binding.progressBar.visibility = View.VISIBLE
+            binding.progressBarBlogScreen.visibility = View.VISIBLE
         } else {
-            binding.progressBar.visibility = View.GONE
+            binding.progressBarBlogScreen.visibility = View.GONE
         }
     }
 }

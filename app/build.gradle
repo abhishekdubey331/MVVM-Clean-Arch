@@ -48,6 +48,8 @@ dependencies {
 
     implementation "androidx.fragment:fragment-ktx:1.5.2"
 
+    implementation "com.squareup.okhttp3:logging-interceptor:4.9.1"
+
     //Dagger - Hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"

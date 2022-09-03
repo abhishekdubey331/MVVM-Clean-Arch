@@ -2,7 +2,6 @@ package com.truecaller.assignment.ui
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.google.common.truth.Truth.assertThat
-import com.truecaller.assignment.common.Resource
 import com.truecaller.assignment.common.UiState
 import com.truecaller.assignment.domain.usecase.contract.GetEveryNthCharUseCase
 import com.truecaller.assignment.domain.usecase.contract.GetNthCharUseCase
@@ -79,7 +78,7 @@ class BlogContentViewModelTest {
         // Given
         val result = "test_string_with_every_nth_character"
         val flow = flow {
-            emit(Resource.Success(result))
+            emit(UiState.Success(result))
         }
 
         // When
@@ -99,7 +98,7 @@ class BlogContentViewModelTest {
         // Given
         val result = "word_count"
         val flow = flow {
-            emit(Resource.Success(result))
+            emit(UiState.Success(result))
         }
 
         // When

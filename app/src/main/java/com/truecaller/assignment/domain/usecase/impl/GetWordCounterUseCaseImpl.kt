@@ -1,6 +1,6 @@
 package com.truecaller.assignment.domain.usecase.impl
 
-import com.truecaller.assignment.common.Resource
+import com.truecaller.assignment.common.UiState
 import com.truecaller.assignment.di.IoDispatcher
 import com.truecaller.assignment.domain.repository.contract.BlogContentRepository
 import com.truecaller.assignment.domain.usecase.contract.GetWordCounterUseCase
@@ -20,14 +20,14 @@ class GetWordCounterUseCaseImpl @Inject constructor(
 
     override fun invoke() = flow {
         try {
-            emit(Resource.Loading())
+            emit(UiState.Loading)
             val blogContent = repository.fetchBlogContent()
             val wordCountMap = getWordCountMapFromBlogContent(blogContent)
-            emit(Resource.Success(getWordCountStringFromMap(wordCountMap)))
+            emit(UiState.Success(getWordCountStringFromMap(wordCountMap)))
         } catch (e: HttpException) {
-            emit(Resource.Error(stringUtils.somethingWentWrong()))
+            emit(UiState.Failure(stringUtils.somethingWentWrong()))
         } catch (e: IOException) {
-            emit(Resource.Error(stringUtils.noNetworkErrorMessage()))
+            emit(UiState.Failure(stringUtils.noNetworkErrorMessage()))
         }
     }.flowOn(ioDispatcher)
 

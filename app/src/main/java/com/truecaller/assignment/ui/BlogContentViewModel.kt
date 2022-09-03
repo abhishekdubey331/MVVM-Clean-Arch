@@ -2,7 +2,6 @@ package com.truecaller.assignment.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.truecaller.assignment.common.Resource
 import com.truecaller.assignment.common.UiState
 import com.truecaller.assignment.domain.usecase.contract.GetEveryNthCharUseCase
 import com.truecaller.assignment.domain.usecase.contract.GetNthCharUseCase
@@ -46,13 +45,13 @@ class BlogContentViewModel @Inject constructor(
         getEveryNthCharUseCase(n).collect { result ->
             _state.update {
                 when (result) {
-                    is Resource.Loading -> it.copy(isLoading = true, errorMessage = null)
+                    is UiState.Loading -> it.copy(isLoading = true, errorMessage = null)
 
-                    is Resource.Success -> it.copy(isLoading = false, everyNthChar = result.data!!)
+                    is UiState.Success -> it.copy(isLoading = false, everyNthChar = result.data!!)
 
-                    is Resource.Error -> it.copy(
+                    is UiState.Failure -> it.copy(
                         isLoading = false,
-                        errorMessage = result.message
+                        errorMessage = result.errorMessage
                     )
                 }
             }
@@ -63,13 +62,13 @@ class BlogContentViewModel @Inject constructor(
         getWordCounterUseCase().collect { result ->
             _state.update {
                 when (result) {
-                    is Resource.Loading -> it.copy(isLoading = true, errorMessage = null)
+                    is UiState.Loading -> it.copy(isLoading = true, errorMessage = null)
 
-                    is Resource.Success -> it.copy(wordCount = result.data!!)
+                    is UiState.Success -> it.copy(wordCount = result.data!!)
 
-                    is Resource.Error -> it.copy(
+                    is UiState.Failure -> it.copy(
                         isLoading = false,
-                        errorMessage = result.message
+                        errorMessage = result.errorMessage
                     )
                 }
             }

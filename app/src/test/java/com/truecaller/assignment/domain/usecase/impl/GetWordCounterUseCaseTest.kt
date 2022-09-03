@@ -1,7 +1,7 @@
 package com.truecaller.assignment.domain.usecase.impl
 
 import com.google.common.truth.Truth.assertThat
-import com.truecaller.assignment.common.Resource
+import com.truecaller.assignment.common.UiState
 import com.truecaller.assignment.domain.repository.contract.BlogContentRepository
 import com.truecaller.assignment.domain.usecase.contract.GetWordCounterUseCase
 import com.truecaller.assignment.ui.base.MainCoroutinesRule
@@ -9,8 +9,9 @@ import com.truecaller.assignment.utils.StringUtils
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runTest
-import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.ResponseBody
+import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -58,31 +59,29 @@ class GetWordCounterUseCaseTest {
 
         // Then
         val allResult = result.toList()
-        assertThat(allResult.first()).isInstanceOf(Resource.Loading::class.java)
-        assertThat(allResult.last().data?.trim()).isEqualTo(expectedResult.trim())
+        assertThat(allResult.first()).isInstanceOf(UiState.Loading::class.java)
+        assertThat(allResult.last()).isInstanceOf(UiState.Success::class.java)
+        assertThat((allResult.last() as UiState.Success).data.trim()).isEqualTo(expectedResult.trim())
         Mockito.verify(blogContentRepository, Mockito.times(1)).fetchBlogContent()
     }
 
     @Test
     fun `test nth char api failure scenario`() = runTest {
         // Given
-        val sampleErrorResponse = "HTTP 400 Response.error()"
+        val sampleErrorResponse = "Something Went Wrong!"
+        val body = "Test Error Message".toResponseBody("text/html".toMediaTypeOrNull())
+        val httpException = HttpException(Response.error<ResponseBody>(500, body))
 
         // When
-        val httpException = HttpException(
-            Response.error<ResponseBody>(
-                400,
-                ResponseBody.create(MediaType.parse("plain/text"), "")
-            )
-        )
         whenever(blogContentRepository.fetchBlogContent()).thenThrow(httpException)
         whenever(stringUtils.somethingWentWrong()).thenReturn(sampleErrorResponse)
         val result = getWordCounterUseCase.invoke()
 
         // Then
         val allResult = result.toList()
-        assertThat(allResult.first()).isInstanceOf(Resource.Loading::class.java)
-        assertThat(allResult.last().message).isEqualTo(sampleErrorResponse)
+        assertThat(allResult.first()).isInstanceOf(UiState.Loading::class.java)
+        assertThat(allResult.last()).isInstanceOf(UiState.Failure::class.java)
+        assertThat((allResult.last() as UiState.Failure).errorMessage).isEqualTo(sampleErrorResponse)
         Mockito.verify(blogContentRepository, Mockito.times(1)).fetchBlogContent()
     }
 }

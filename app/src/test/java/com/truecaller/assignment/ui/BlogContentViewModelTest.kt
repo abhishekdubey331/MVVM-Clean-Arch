@@ -1,17 +1,19 @@
 package com.truecaller.assignment.ui
 
-
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.google.common.truth.Truth.assertThat
 import com.truecaller.assignment.common.Resource
 import com.truecaller.assignment.domain.usecase.contract.GetEveryNthCharUseCase
 import com.truecaller.assignment.domain.usecase.contract.GetNthCharUseCase
 import com.truecaller.assignment.domain.usecase.contract.GetWordCounterUseCase
-import com.truecaller.assignment.ui.base.BaseViewModelTest
+import com.truecaller.assignment.ui.base.MainCoroutinesRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.TestRule
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
@@ -20,7 +22,7 @@ import org.mockito.Mockito.`when` as whenever
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
-class BlogContentViewModelTest : BaseViewModelTest() {
+class BlogContentViewModelTest {
 
     private lateinit var blogContentViewModel: BlogContentViewModel
 
@@ -32,6 +34,12 @@ class BlogContentViewModelTest : BaseViewModelTest() {
 
     @Mock
     lateinit var getWordCounterUseCase: GetWordCounterUseCase
+
+    @get:Rule
+    val testInstantTaskExecutorRule: TestRule = InstantTaskExecutorRule()
+
+    @get:Rule
+    val dispatcherRule = MainCoroutinesRule()
 
     private val nthValue = 10
 

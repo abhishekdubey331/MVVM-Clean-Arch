@@ -11,28 +11,37 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
+import kotlinx.coroutines.CoroutineDispatcher
 
 @InstallIn(ViewModelComponent::class)
 @Module
 object UseCaseModule {
 
     @Provides
-    fun getNthCharUseCase(blogContentRepository: BlogContentRepository): GetNthCharUseCase =
-        GetNthCharUseCaseImpl(
-            blogContentRepository
-        )
+    fun getNthCharUseCase(
+        blogContentRepository: BlogContentRepository,
+        @IoDispatcher coroutineDispatcher: CoroutineDispatcher
+    ): GetNthCharUseCase = GetNthCharUseCaseImpl(
+        blogContentRepository, coroutineDispatcher
+    )
 
     @Provides
-    fun getEveryNthCharUseCase(blogContentRepository: BlogContentRepository): GetEveryNthCharUseCase =
-        GetEveryNthCharUseCaseImpl(
-            blogContentRepository
-        )
+    fun getEveryNthCharUseCase(
+        blogContentRepository: BlogContentRepository,
+        @IoDispatcher coroutineDispatcher: CoroutineDispatcher
+    ): GetEveryNthCharUseCase = GetEveryNthCharUseCaseImpl(
+        blogContentRepository,
+        coroutineDispatcher
+    )
 
 
     @Provides
-    fun getWordCounterUseCaseImpl(blogContentRepository: BlogContentRepository): GetWordCounterUseCase =
-        GetWordCounterUseCaseImpl(
-            blogContentRepository
-        )
+    fun getWordCounterUseCaseImpl(
+        blogContentRepository: BlogContentRepository,
+        @IoDispatcher coroutineDispatcher: CoroutineDispatcher
+    ): GetWordCounterUseCase = GetWordCounterUseCaseImpl(
+        blogContentRepository,
+        coroutineDispatcher
+    )
 }
 

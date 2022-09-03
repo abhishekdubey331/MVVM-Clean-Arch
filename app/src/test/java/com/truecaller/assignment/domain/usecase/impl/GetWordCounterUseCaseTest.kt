@@ -4,12 +4,14 @@ import com.google.common.truth.Truth.assertThat
 import com.truecaller.assignment.common.Resource
 import com.truecaller.assignment.domain.repository.contract.BlogContentRepository
 import com.truecaller.assignment.domain.usecase.contract.GetWordCounterUseCase
+import com.truecaller.assignment.ui.base.MainCoroutinesRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runTest
 import okhttp3.MediaType
 import okhttp3.ResponseBody
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
@@ -26,10 +28,14 @@ class GetWordCounterUseCaseTest {
 
     private lateinit var getWordCounterUseCase: GetWordCounterUseCase
 
+    @get:Rule
+    var coroutineRule = MainCoroutinesRule()
+
     @Before
     fun setup() {
         MockitoAnnotations.openMocks(this)
-        getWordCounterUseCase = GetWordCounterUseCaseImpl(blogContentRepository)
+        getWordCounterUseCase =
+            GetWordCounterUseCaseImpl(blogContentRepository, coroutineRule.testDispatcher)
     }
 
     @Test

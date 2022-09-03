@@ -4,12 +4,14 @@ import com.google.common.truth.Truth.assertThat
 import com.truecaller.assignment.common.Resource
 import com.truecaller.assignment.domain.repository.contract.BlogContentRepository
 import com.truecaller.assignment.domain.usecase.contract.GetNthCharUseCase
+import com.truecaller.assignment.ui.base.MainCoroutinesRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runTest
 import okhttp3.MediaType
 import okhttp3.ResponseBody
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
@@ -26,12 +28,15 @@ class GetNthCharUseCaseTest {
 
     private lateinit var getNthCharUseCase: GetNthCharUseCase
 
+    @get:Rule
+    var coroutineRule = MainCoroutinesRule()
+
     private val nthValue = 10
 
     @Before
     fun setup() {
         MockitoAnnotations.openMocks(this)
-        getNthCharUseCase = GetNthCharUseCaseImpl(blogContentRepository)
+        getNthCharUseCase = GetNthCharUseCaseImpl(blogContentRepository,coroutineRule.testDispatcher)
     }
 
     @Test

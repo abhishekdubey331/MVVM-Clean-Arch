@@ -12,7 +12,7 @@ import org.junit.runner.Description
 @Suppress("DEPRECATION")
 @ExperimentalCoroutinesApi
 class MainCoroutinesRule(
-    private val testDispatcher: TestCoroutineDispatcher = TestCoroutineDispatcher()
+    val testDispatcher: TestCoroutineDispatcher = TestCoroutineDispatcher()
 ) : TestWatcher(), TestCoroutineScope by TestCoroutineScope() {
 
     override fun starting(description: Description?) {
@@ -26,4 +26,3 @@ class MainCoroutinesRule(
         testDispatcher.cleanupTestCoroutines()
     }
 }
-

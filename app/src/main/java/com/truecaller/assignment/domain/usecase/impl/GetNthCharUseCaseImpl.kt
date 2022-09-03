@@ -4,6 +4,7 @@ import com.truecaller.assignment.common.Resource
 import com.truecaller.assignment.di.IoDispatcher
 import com.truecaller.assignment.domain.repository.contract.BlogContentRepository
 import com.truecaller.assignment.domain.usecase.contract.GetNthCharUseCase
+import com.truecaller.assignment.utils.StringUtils
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -14,6 +15,7 @@ import javax.inject.Inject
 
 class GetNthCharUseCaseImpl @Inject constructor(
     private val repository: BlogContentRepository,
+    private val stringUtils: StringUtils,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : GetNthCharUseCase {
 
@@ -24,9 +26,9 @@ class GetNthCharUseCaseImpl @Inject constructor(
             val nThChar = getNthCharFromContent(blogContent, n)
             emit(Resource.Success(nThChar))
         } catch (e: HttpException) {
-            emit(Resource.Error(e.localizedMessage ?: "Something went wrong"))
+            emit(Resource.Error(stringUtils.somethingWentWrong()))
         } catch (e: IOException) {
-            emit(Resource.Error("Couldn't reach server. Check your internet connection"))
+            emit(Resource.Error(stringUtils.noNetworkErrorMessage()))
         }
     }.flowOn(ioDispatcher)
 

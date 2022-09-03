@@ -15,6 +15,6 @@ object RepositoryModule {
 
     @Provides
     @ViewModelScoped
-    fun provideListRepository(blogApi: BlogApi): BlogContentRepository =
+    fun provideBlogContentRepository(blogApi: BlogApi): BlogContentRepository =
         BlogContentRepositoryImpl(blogApi)
 }

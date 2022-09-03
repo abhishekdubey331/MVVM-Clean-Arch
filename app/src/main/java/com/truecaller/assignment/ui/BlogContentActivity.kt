@@ -37,11 +37,11 @@ class BlogContentActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateContent(uiState: BlogContentScreenState) {
+    private fun updateContent(uiState: BlogContentUiState) {
         binding.textviewBlogScreen10thCharContent.text = uiState.nthChar.toString()
         binding.textviewBlogScreenEvery10thCharContent.text = uiState.everyNthChar
         binding.textviewBlogScreenWordCounterContent.text = uiState.wordCount
-        binding.textviewErrorBlogScreen.text = uiState.message
+        binding.textviewErrorBlogScreen.text = uiState.errorMessage
     }
 
     private fun updateLoadingState(loading: Boolean) {

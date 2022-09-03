@@ -3,12 +3,14 @@ package com.truecaller.assignment.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.truecaller.assignment.common.Resource
+import com.truecaller.assignment.common.UiState
 import com.truecaller.assignment.domain.usecase.contract.GetEveryNthCharUseCase
 import com.truecaller.assignment.domain.usecase.contract.GetNthCharUseCase
 import com.truecaller.assignment.domain.usecase.contract.GetWordCounterUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,73 +21,56 @@ class BlogContentViewModel @Inject constructor(
     private val getWordCounterUseCase: GetWordCounterUseCase
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(BlogContentScreenState())
+    private val _state = MutableStateFlow(BlogContentUiState())
 
-    val state: StateFlow<BlogContentScreenState> = _state
+    val state: StateFlow<BlogContentUiState> = _state
 
-    fun getNthChar(n: Int) {
-        viewModelScope.launch {
-            getNthCharUseCase(n).collect { result ->
-
+    fun getNthChar(n: Int) = viewModelScope.launch {
+        getNthCharUseCase(n).collect { result ->
+            _state.update {
                 when (result) {
-                    is Resource.Loading -> {
-                        _state.value = state.value.copy(isLoading = true)
-                    }
+                    is UiState.Loading -> it.copy(isLoading = true, errorMessage = null)
 
-                    is Resource.Success -> {
-                        _state.value = state.value.copy(
-                            isLoading = false,
-                            nthChar = result.data ?: Char.MIN_VALUE
-                        )
+                    is UiState.Success -> it.copy(isLoading = false, nthChar = result.data)
 
-                    }
-
-                    is Resource.Error -> {
-                        _state.value =
-                            state.value.copy(isLoading = false, message = result.message ?: "")
-                    }
+                    is UiState.Failure -> it.copy(
+                        isLoading = false,
+                        errorMessage = result.errorMessage
+                    )
                 }
             }
         }
     }
 
-    fun getEveryNthChar(n: Int) {
-        viewModelScope.launch {
-            getEveryNthCharUseCase(n).collect { result ->
+    fun getEveryNthChar(n: Int) = viewModelScope.launch {
+        getEveryNthCharUseCase(n).collect { result ->
+            _state.update {
                 when (result) {
-                    is Resource.Loading -> {
-                        _state.value = state.value.copy(isLoading = true)
-                    }
+                    is Resource.Loading -> it.copy(isLoading = true, errorMessage = null)
 
-                    is Resource.Success -> {
-                        _state.value =
-                            state.value.copy(isLoading = false, everyNthChar = result.data ?: "")
-                    }
+                    is Resource.Success -> it.copy(isLoading = false, everyNthChar = result.data!!)
 
-                    is Resource.Error -> {
-                        _state.value =
-                            state.value.copy(isLoading = false, message = result.message ?: "")
-                    }
+                    is Resource.Error -> it.copy(
+                        isLoading = false,
+                        errorMessage = result.message
+                    )
                 }
             }
         }
     }
 
-    fun getWordCounter() {
-        viewModelScope.launch {
-            getWordCounterUseCase().collect { result ->
+    fun getWordCounter() = viewModelScope.launch {
+        getWordCounterUseCase().collect { result ->
+            _state.update {
                 when (result) {
-                    is Resource.Loading -> {
-                        _state.value = BlogContentScreenState(isLoading = true)
-                    }
+                    is Resource.Loading -> it.copy(isLoading = true, errorMessage = null)
 
-                    is Resource.Success -> {
-                        _state.value = state.value.copy(wordCount = result.data ?: "")
-                    }
+                    is Resource.Success -> it.copy(wordCount = result.data!!)
 
-                    is Resource.Error -> {
-                        _state.value = state.value.copy(message = result.message ?: "")
-                    }
+                    is Resource.Error -> it.copy(
+                        isLoading = false,
+                        errorMessage = result.message
+                    )
                 }
             }
         }

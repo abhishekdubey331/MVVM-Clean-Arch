@@ -5,6 +5,7 @@ import com.truecaller.assignment.common.Resource
 import com.truecaller.assignment.domain.repository.contract.BlogContentRepository
 import com.truecaller.assignment.domain.usecase.contract.GetNthCharUseCase
 import com.truecaller.assignment.ui.base.MainCoroutinesRule
+import com.truecaller.assignment.utils.StringUtils
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runTest
@@ -23,20 +24,27 @@ import org.mockito.Mockito.`when` as whenever
 @OptIn(ExperimentalCoroutinesApi::class)
 class GetNthCharUseCaseTest {
 
+    @get:Rule
+    var coroutineRule = MainCoroutinesRule()
+
     @Mock
     lateinit var blogContentRepository: BlogContentRepository
 
-    private lateinit var getNthCharUseCase: GetNthCharUseCase
+    @Mock
+    lateinit var stringUtils: StringUtils
 
-    @get:Rule
-    var coroutineRule = MainCoroutinesRule()
+    private lateinit var getNthCharUseCase: GetNthCharUseCase
 
     private val nthValue = 10
 
     @Before
     fun setup() {
         MockitoAnnotations.openMocks(this)
-        getNthCharUseCase = GetNthCharUseCaseImpl(blogContentRepository,coroutineRule.testDispatcher)
+        getNthCharUseCase = GetNthCharUseCaseImpl(
+            blogContentRepository,
+            stringUtils,
+            coroutineRule.testDispatcher
+        )
     }
 
     @Test
@@ -51,7 +59,7 @@ class GetNthCharUseCaseTest {
         // Then
         val allResult = result.toList()
         assertThat(allResult.first()).isInstanceOf(Resource.Loading::class.java)
-        assertThat(allResult.last().data).isEqualTo(sampleResponse[nthValue])
+        assertThat(allResult.last().data).isEqualTo(sampleResponse[nthValue - 1].toString())
         Mockito.verify(blogContentRepository, Mockito.times(1)).fetchBlogContent()
     }
 
@@ -68,6 +76,7 @@ class GetNthCharUseCaseTest {
             )
         )
         whenever(blogContentRepository.fetchBlogContent()).thenThrow(httpException)
+        whenever(stringUtils.somethingWentWrong()).thenReturn(sampleErrorResponse)
         val result = getNthCharUseCase.invoke(nthValue)
 
         // Then

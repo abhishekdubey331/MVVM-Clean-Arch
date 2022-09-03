@@ -3,6 +3,7 @@ package com.truecaller.assignment.ui
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.google.common.truth.Truth.assertThat
 import com.truecaller.assignment.common.Resource
+import com.truecaller.assignment.common.UiState
 import com.truecaller.assignment.domain.usecase.contract.GetEveryNthCharUseCase
 import com.truecaller.assignment.domain.usecase.contract.GetNthCharUseCase
 import com.truecaller.assignment.domain.usecase.contract.GetWordCounterUseCase
@@ -56,9 +57,9 @@ class BlogContentViewModelTest {
     @Test
     fun `test nth char`() = runTest {
         // Given
-        val result = 'K'
+        val result = "K"
         val flow = flow {
-            emit(Resource.Success(result))
+            emit(UiState.Success(result))
         }
 
         // When
@@ -70,7 +71,7 @@ class BlogContentViewModelTest {
         assertThat(blogContentViewModel.state.value.everyNthChar).isEqualTo("")
         assertThat(blogContentViewModel.state.value.wordCount).isEqualTo("")
         assertThat(blogContentViewModel.state.value.isLoading).isFalse()
-        assertThat(blogContentViewModel.state.value.message).isNull()
+        assertThat(blogContentViewModel.state.value.errorMessage).isNull()
     }
 
     @Test
@@ -87,10 +88,10 @@ class BlogContentViewModelTest {
 
         // Then
         assertThat(blogContentViewModel.state.value.everyNthChar).isEqualTo(result)
-        assertThat(blogContentViewModel.state.value.nthChar).isEqualTo(Char.MIN_VALUE)
+        assertThat(blogContentViewModel.state.value.nthChar).isEqualTo("")
         assertThat(blogContentViewModel.state.value.wordCount).isEqualTo("")
         assertThat(blogContentViewModel.state.value.isLoading).isFalse()
-        assertThat(blogContentViewModel.state.value.message).isNull()
+        assertThat(blogContentViewModel.state.value.errorMessage).isNull()
     }
 
     @Test
@@ -107,10 +108,10 @@ class BlogContentViewModelTest {
 
         // Then
         assertThat(blogContentViewModel.state.value.wordCount).isEqualTo(result)
-        assertThat(blogContentViewModel.state.value.nthChar).isEqualTo(Char.MIN_VALUE)
+        assertThat(blogContentViewModel.state.value.nthChar).isEqualTo("")
         assertThat(blogContentViewModel.state.value.everyNthChar).isEqualTo("")
         assertThat(blogContentViewModel.state.value.isLoading).isFalse()
-        assertThat(blogContentViewModel.state.value.message).isNull()
+        assertThat(blogContentViewModel.state.value.errorMessage).isNull()
     }
 }
 

@@ -1,10 +1,12 @@
 package com.truecaller.assignment.domain.usecase.impl
 
 import com.google.common.truth.Truth.assertThat
+import com.truecaller.assignment.TruBlogApp
 import com.truecaller.assignment.common.Resource
 import com.truecaller.assignment.domain.repository.contract.BlogContentRepository
 import com.truecaller.assignment.domain.usecase.contract.GetEveryNthCharUseCase
 import com.truecaller.assignment.ui.base.MainCoroutinesRule
+import com.truecaller.assignment.utils.StringUtils
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runTest
@@ -23,6 +25,9 @@ class GetEveryNthCharUseCaseTest {
     @Mock
     lateinit var blogContentRepository: BlogContentRepository
 
+    @Mock
+    lateinit var stringUtils: StringUtils
+
     @get:Rule
     var coroutineRule = MainCoroutinesRule()
 
@@ -34,7 +39,11 @@ class GetEveryNthCharUseCaseTest {
     fun setup() {
         MockitoAnnotations.openMocks(this)
         getEveryNthCharUseCase =
-            GetEveryNthCharUseCaseImpl(blogContentRepository, coroutineRule.testDispatcher)
+            GetEveryNthCharUseCaseImpl(
+                blogContentRepository,
+                stringUtils,
+                coroutineRule.testDispatcher
+            )
     }
 
     @Test
@@ -42,7 +51,7 @@ class GetEveryNthCharUseCaseTest {
         // Given
         val sampleResponse = "sample server response"
         // as index start from 0 so 9th char is the 10th char
-        val expectedResult = "${sampleResponse[nthValue - 1]},${sampleResponse[nthValue * 2 - 1]},"
+        val expectedResult = "${sampleResponse[nthValue - 1]},${sampleResponse[nthValue * 2 - 1]}"
         // When
         whenever(blogContentRepository.fetchBlogContent()).thenReturn(sampleResponse)
         val result = getEveryNthCharUseCase.invoke(nthValue)

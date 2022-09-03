@@ -1,10 +1,10 @@
 package com.truecaller.assignment.domain.usecase.contract
 
-import com.truecaller.assignment.common.Resource
+import com.truecaller.assignment.common.UiState
 import kotlinx.coroutines.flow.Flow
 
 interface GetNthCharUseCase {
 
-    operator fun invoke(n: Int): Flow<Resource<Char>>
+    operator fun invoke(n: Int): Flow<UiState<String>>
 
 }

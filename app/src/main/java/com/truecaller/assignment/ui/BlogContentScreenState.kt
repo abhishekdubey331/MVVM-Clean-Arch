@@ -1,10 +1,11 @@
 package com.truecaller.assignment.ui
 
 
-data class BlogContentScreenState(
+data class BlogContentUiState(
     val isLoading: Boolean = false,
-    val message: String? = null,
-    val nthChar: Char = Char.MIN_VALUE,
+    val errorMessage: String? = null,
+    val nthChar: String = "",
     val everyNthChar: String = "",
     val wordCount: String = ""
 )
+

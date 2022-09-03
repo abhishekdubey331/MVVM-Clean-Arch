@@ -9,6 +9,7 @@ import com.truecaller.assignment.domain.usecase.impl.GetEveryNthCharUseCaseImpl
 import com.truecaller.assignment.domain.usecase.impl.GetNthCharUseCaseImpl
 import com.truecaller.assignment.domain.usecase.impl.GetWordCounterUseCaseImpl
 import com.truecaller.assignment.utils.StringUtils
+import com.truecaller.assignment.utils.StringUtilsImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,7 +30,7 @@ object UseCaseModule {
     )
 
     @Provides
-    fun provideStringUtils(app: Application): StringUtils = StringUtils(app)
+    fun provideStringUtils(app: Application): StringUtils = StringUtilsImpl(app)
 
     @Provides
     fun getEveryNthCharUseCase(

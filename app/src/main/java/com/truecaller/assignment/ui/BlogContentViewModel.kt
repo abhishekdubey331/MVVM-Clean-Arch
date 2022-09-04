@@ -64,7 +64,7 @@ class BlogContentViewModel @Inject constructor(
                 when (result) {
                     is UiState.Loading -> it.copy(isLoading = true, errorMessage = null)
 
-                    is UiState.Success -> it.copy(wordCount = result.data)
+                    is UiState.Success -> it.copy(isLoading = false, wordCount = result.data)
 
                     is UiState.Failure -> it.copy(
                         isLoading = false,

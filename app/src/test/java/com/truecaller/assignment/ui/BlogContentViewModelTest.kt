@@ -74,6 +74,27 @@ class BlogContentViewModelTest {
     }
 
     @Test
+    fun `test nth char failure`() = runTest {
+        // Given
+        val sampleErrorResponse = "Something Went Wrong!"
+        val flow = flow {
+            emit(UiState.Failure(sampleErrorResponse))
+        }
+
+        // When
+        whenever(getNthCharUseCase.invoke(nthValue)).thenReturn(flow)
+        blogContentViewModel.getNthChar(nthValue)
+
+        // Then
+        assertThat(blogContentViewModel.state.value.wordCount).isEmpty()
+        assertThat(blogContentViewModel.state.value.nthChar).isEmpty()
+        assertThat(blogContentViewModel.state.value.everyNthChar).isEmpty()
+        assertThat(blogContentViewModel.state.value.isLoading).isFalse()
+        assertThat(blogContentViewModel.state.value.errorMessage).isNotNull()
+        assertThat(blogContentViewModel.state.value.errorMessage).isEqualTo(sampleErrorResponse)
+    }
+
+    @Test
     fun `test every nth char success`() = runTest {
         // Given
         val result = "test_string_with_every_nth_character"
@@ -93,6 +114,29 @@ class BlogContentViewModelTest {
         assertThat(blogContentViewModel.state.value.errorMessage).isNull()
     }
 
+
+    @Test
+    fun `test every nth char failure`() = runTest {
+        // Given
+        val sampleErrorResponse = "Something Went Wrong!"
+        val flow = flow {
+            emit(UiState.Failure(sampleErrorResponse))
+        }
+
+        // When
+        whenever(getEveryNthCharUseCase.invoke(nthValue)).thenReturn(flow)
+        blogContentViewModel.getEveryNthChar(nthValue)
+
+        // Then
+        assertThat(blogContentViewModel.state.value.wordCount).isEmpty()
+        assertThat(blogContentViewModel.state.value.nthChar).isEmpty()
+        assertThat(blogContentViewModel.state.value.everyNthChar).isEmpty()
+        assertThat(blogContentViewModel.state.value.isLoading).isFalse()
+        assertThat(blogContentViewModel.state.value.errorMessage).isNotNull()
+        assertThat(blogContentViewModel.state.value.errorMessage).isEqualTo(sampleErrorResponse)
+    }
+
+
     @Test
     fun `test word counter success`() = runTest {
         // Given
@@ -111,6 +155,27 @@ class BlogContentViewModelTest {
         assertThat(blogContentViewModel.state.value.everyNthChar).isEmpty()
         assertThat(blogContentViewModel.state.value.isLoading).isFalse()
         assertThat(blogContentViewModel.state.value.errorMessage).isNull()
+    }
+
+    @Test
+    fun `test word counter failure`() = runTest {
+        // Given
+        val sampleErrorResponse = "Something Went Wrong!"
+        val flow = flow {
+            emit(UiState.Failure(sampleErrorResponse))
+        }
+
+        // When
+        whenever(getWordCounterUseCase.invoke()).thenReturn(flow)
+        blogContentViewModel.getWordCounter()
+
+        // Then
+        assertThat(blogContentViewModel.state.value.wordCount).isEmpty()
+        assertThat(blogContentViewModel.state.value.nthChar).isEmpty()
+        assertThat(blogContentViewModel.state.value.everyNthChar).isEmpty()
+        assertThat(blogContentViewModel.state.value.isLoading).isFalse()
+        assertThat(blogContentViewModel.state.value.errorMessage).isNotNull()
+        assertThat(blogContentViewModel.state.value.errorMessage).isEqualTo(sampleErrorResponse)
     }
 }
 

@@ -37,7 +37,10 @@ class BlogContentViewModel @Inject constructor(
 
                     is UiState.Success -> it.copy(nthChar = result.data)
 
-                    is UiState.Failure -> it.copy(errorMessage = result.errorMessage)
+                    is UiState.Failure -> it.copy(
+                        errorMessage = result.errorMessage,
+                        nthChar = ""
+                    )
                 }
             }
         }
@@ -54,7 +57,10 @@ class BlogContentViewModel @Inject constructor(
 
                     is UiState.Success -> it.copy(everyNthChar = result.data)
 
-                    is UiState.Failure -> it.copy(errorMessage = result.errorMessage)
+                    is UiState.Failure -> it.copy(
+                        errorMessage = result.errorMessage,
+                        everyNthChar = ""
+                    )
                 }
             }
         }
@@ -71,7 +77,10 @@ class BlogContentViewModel @Inject constructor(
 
                     is UiState.Success -> it.copy(wordCount = result.data)
 
-                    is UiState.Failure -> it.copy(errorMessage = result.errorMessage)
+                    is UiState.Failure -> it.copy(
+                        errorMessage = result.errorMessage,
+                        wordCount = ""
+                    )
                 }
             }
         }

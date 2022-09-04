@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TruBlog App</string>
+    <string name="app_name">Blog Content</string>
     <string name="title_one_str">10th Character Request</string>
     <string name="title_two_str">Every 10th Character Request</string>
     <string name="title_three_str">Word Counter Request</string>

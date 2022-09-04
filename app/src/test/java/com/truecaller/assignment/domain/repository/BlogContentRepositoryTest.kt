@@ -32,7 +32,7 @@ class BlogContentRepositoryTest {
 
 
     @Test
-    fun `fetch blog content test`() = runTest {
+    fun `test fetch blog content success`() = runTest {
         // Given
         val response = "blog content"
 

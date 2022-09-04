@@ -16,12 +16,12 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
-import org.mockito.Mockito
+import org.mockito.Mockito.times
+import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
 import retrofit2.HttpException
 import retrofit2.Response
 import org.mockito.Mockito.`when` as whenever
-
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class GetEveryNthCharUseCaseTest {
@@ -51,24 +51,25 @@ class GetEveryNthCharUseCaseTest {
     }
 
     @Test
-    fun `test every nth char`() = runTest {
+    fun `test fetch every nth char success`() = runTest {
         // Given
-        val sampleResponse = "sample server response"
+        val response = "sample server response"
         // as index start from 0 so 9th char is the 10th char
-        val expectedResult = "${sampleResponse[nthValue - 1]},${sampleResponse[nthValue * 2 - 1]}"
+        val expectedResult =
+            "${response[nthValue - 1]},${response[nthValue.times(2).minus(1)]}"
         // When
-        whenever(blogContentRepository.fetchBlogContent()).thenReturn(sampleResponse)
+        whenever(blogContentRepository.fetchBlogContent()).thenReturn(response)
         val result = getEveryNthCharUseCase.invoke(nthValue)
 
         // Then
         val allResult = result.toList()
         assertThat(allResult.first()).isInstanceOf(UiState.Loading::class.java)
         assertThat((allResult.last() as UiState.Success).data).isEqualTo(expectedResult)
-        Mockito.verify(blogContentRepository, Mockito.times(1)).fetchBlogContent()
+        verify(blogContentRepository, times(1)).fetchBlogContent()
     }
 
     @Test
-    fun `test every nth char api failure scenario`() = runTest {
+    fun `test fetch every nth char failure`() = runTest {
         // Given
         val sampleErrorResponse = "Something Went Wrong!"
         val body = "Test Error Message".toResponseBody("text/html".toMediaTypeOrNull())
@@ -84,6 +85,6 @@ class GetEveryNthCharUseCaseTest {
         assertThat(allResult.first()).isInstanceOf(UiState.Loading::class.java)
         assertThat(allResult.last()).isInstanceOf(UiState.Failure::class.java)
         assertThat((allResult.last() as UiState.Failure).errorMessage).isEqualTo(sampleErrorResponse)
-        Mockito.verify(blogContentRepository, Mockito.times(1)).fetchBlogContent()
+        verify(blogContentRepository, times(1)).fetchBlogContent()
     }
 }

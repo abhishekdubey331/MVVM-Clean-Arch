@@ -16,7 +16,8 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
-import org.mockito.Mockito
+import org.mockito.Mockito.times
+import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
 import retrofit2.HttpException
 import retrofit2.Response
@@ -49,24 +50,24 @@ class GetNthCharUseCaseTest {
     }
 
     @Test
-    fun `test nth char success scenario`() = runTest {
+    fun `test fetch nth char success`() = runTest {
         // Given
-        val sampleResponse = "sample server response"
+        val response = "sample server response"
 
         // When
-        whenever(blogContentRepository.fetchBlogContent()).thenReturn(sampleResponse)
+        whenever(blogContentRepository.fetchBlogContent()).thenReturn(response)
         val result = getNthCharUseCase.invoke(nthValue)
 
         // Then
         val allResult = result.toList()
         assertThat(allResult.first()).isInstanceOf(UiState.Loading::class.java)
         assertThat(allResult.last()).isInstanceOf(UiState.Success::class.java)
-        assertThat((allResult.last() as UiState.Success).data).isEqualTo(sampleResponse[nthValue - 1].toString())
-        Mockito.verify(blogContentRepository, Mockito.times(1)).fetchBlogContent()
+        assertThat((allResult.last() as UiState.Success).data).isEqualTo(response[nthValue.minus(1)].toString())
+        verify(blogContentRepository, times(1)).fetchBlogContent()
     }
 
     @Test
-    fun `test nth char api failure scenario`() = runTest {
+    fun `test fetch nth char failure`() = runTest {
         // Given
         val sampleErrorResponse = "Something Went Wrong!"
         val body = "Test Error Message".toResponseBody("text/html".toMediaTypeOrNull())
@@ -82,6 +83,6 @@ class GetNthCharUseCaseTest {
         assertThat(allResult.first()).isInstanceOf(UiState.Loading::class.java)
         assertThat(allResult.last()).isInstanceOf(UiState.Failure::class.java)
         assertThat((allResult.last() as UiState.Failure).errorMessage).isEqualTo(sampleErrorResponse)
-        Mockito.verify(blogContentRepository, Mockito.times(1)).fetchBlogContent()
+        verify(blogContentRepository, times(1)).fetchBlogContent()
     }
 }

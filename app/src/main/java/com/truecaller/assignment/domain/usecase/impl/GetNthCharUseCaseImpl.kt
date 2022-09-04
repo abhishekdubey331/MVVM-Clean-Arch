@@ -32,5 +32,6 @@ class GetNthCharUseCaseImpl @Inject constructor(
         }
     }.flowOn(ioDispatcher)
 
-    private fun getNthCharFromContent(blogContent: String, n: Int) = blogContent[n - 1].toString()
+    private fun getNthCharFromContent(blogContent: String, n: Int) =
+        blogContent[n.minus(1)].toString()
 }

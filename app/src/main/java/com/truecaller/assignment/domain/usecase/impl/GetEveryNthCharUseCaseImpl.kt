@@ -31,9 +31,9 @@ class GetEveryNthCharUseCaseImpl @Inject constructor(
     }.flowOn(ioDispatcher)
 
     private fun getEveryNthCharFromBlogContent(blogContent: String, n: Int) = buildString {
-        for (i in n - 1..blogContent.length step n) {
-            append(blogContent[i] + ",")
+        for (i in n.minus(1)..blogContent.length step n) {
+            append(blogContent[i].plus(","))
         }
-        this.deleteCharAt(this.length - 1);
+        this.deleteCharAt(this.length.minus(1))
     }
 }

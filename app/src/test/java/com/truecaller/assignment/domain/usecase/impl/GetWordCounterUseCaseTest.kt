@@ -16,7 +16,8 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
-import org.mockito.Mockito
+import org.mockito.Mockito.times
+import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
 import retrofit2.HttpException
 import retrofit2.Response
@@ -48,13 +49,13 @@ class GetWordCounterUseCaseTest {
     }
 
     @Test
-    fun `test nth char success scenario`() = runTest {
+    fun `test fetch word count success`() = runTest {
         // Given
-        val sampleResponse = "sample sample sample"
+        val response = "sample sample sample"
         val expectedResult = "sample: 3"
 
         // When
-        whenever(blogContentRepository.fetchBlogContent()).thenReturn(sampleResponse)
+        whenever(blogContentRepository.fetchBlogContent()).thenReturn(response)
         val result = getWordCounterUseCase.invoke()
 
         // Then
@@ -62,11 +63,11 @@ class GetWordCounterUseCaseTest {
         assertThat(allResult.first()).isInstanceOf(UiState.Loading::class.java)
         assertThat(allResult.last()).isInstanceOf(UiState.Success::class.java)
         assertThat((allResult.last() as UiState.Success).data.trim()).isEqualTo(expectedResult.trim())
-        Mockito.verify(blogContentRepository, Mockito.times(1)).fetchBlogContent()
+        verify(blogContentRepository, times(1)).fetchBlogContent()
     }
 
     @Test
-    fun `test nth char api failure scenario`() = runTest {
+    fun `test fetch word count  failure`() = runTest {
         // Given
         val sampleErrorResponse = "Something Went Wrong!"
         val body = "Test Error Message".toResponseBody("text/html".toMediaTypeOrNull())
@@ -82,6 +83,6 @@ class GetWordCounterUseCaseTest {
         assertThat(allResult.first()).isInstanceOf(UiState.Loading::class.java)
         assertThat(allResult.last()).isInstanceOf(UiState.Failure::class.java)
         assertThat((allResult.last() as UiState.Failure).errorMessage).isEqualTo(sampleErrorResponse)
-        Mockito.verify(blogContentRepository, Mockito.times(1)).fetchBlogContent()
+        verify(blogContentRepository, times(1)).fetchBlogContent()
     }
 }

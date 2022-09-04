@@ -7,6 +7,7 @@ import com.truecaller.assignment.common.UiState
 import com.truecaller.assignment.domain.usecase.contract.GetEveryNthCharUseCase
 import com.truecaller.assignment.domain.usecase.contract.GetNthCharUseCase
 import com.truecaller.assignment.domain.usecase.contract.GetWordCounterUseCase
+import com.truecaller.assignment.utils.StringUtils
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
@@ -35,6 +36,9 @@ class BlogContentViewModelTest {
     @Mock
     lateinit var getWordCounterUseCase: GetWordCounterUseCase
 
+    @Mock
+    lateinit var stringUtils: StringUtils
+
     @get:Rule
     val testInstantTaskExecutorRule: TestRule = InstantTaskExecutorRule()
 
@@ -49,7 +53,8 @@ class BlogContentViewModelTest {
         blogContentViewModel = BlogContentViewModel(
             getNthCharUseCase,
             getEveryNthCharUseCase,
-            getWordCounterUseCase
+            getWordCounterUseCase,
+            stringUtils
         )
     }
 
@@ -69,7 +74,6 @@ class BlogContentViewModelTest {
         assertThat(blogContentViewModel.state.value.nthChar).isEqualTo(result)
         assertThat(blogContentViewModel.state.value.everyNthChar).isEmpty()
         assertThat(blogContentViewModel.state.value.wordCount).isEmpty()
-        assertThat(blogContentViewModel.state.value.isLoading).isFalse()
         assertThat(blogContentViewModel.state.value.errorMessage).isNull()
     }
 
@@ -89,7 +93,6 @@ class BlogContentViewModelTest {
         assertThat(blogContentViewModel.state.value.wordCount).isEmpty()
         assertThat(blogContentViewModel.state.value.nthChar).isEmpty()
         assertThat(blogContentViewModel.state.value.everyNthChar).isEmpty()
-        assertThat(blogContentViewModel.state.value.isLoading).isFalse()
         assertThat(blogContentViewModel.state.value.errorMessage).isNotNull()
         assertThat(blogContentViewModel.state.value.errorMessage).isEqualTo(sampleErrorResponse)
     }
@@ -110,7 +113,6 @@ class BlogContentViewModelTest {
         assertThat(blogContentViewModel.state.value.everyNthChar).isEqualTo(result)
         assertThat(blogContentViewModel.state.value.nthChar).isEmpty()
         assertThat(blogContentViewModel.state.value.wordCount).isEmpty()
-        assertThat(blogContentViewModel.state.value.isLoading).isFalse()
         assertThat(blogContentViewModel.state.value.errorMessage).isNull()
     }
 
@@ -131,7 +133,6 @@ class BlogContentViewModelTest {
         assertThat(blogContentViewModel.state.value.wordCount).isEmpty()
         assertThat(blogContentViewModel.state.value.nthChar).isEmpty()
         assertThat(blogContentViewModel.state.value.everyNthChar).isEmpty()
-        assertThat(blogContentViewModel.state.value.isLoading).isFalse()
         assertThat(blogContentViewModel.state.value.errorMessage).isNotNull()
         assertThat(blogContentViewModel.state.value.errorMessage).isEqualTo(sampleErrorResponse)
     }
@@ -153,7 +154,6 @@ class BlogContentViewModelTest {
         assertThat(blogContentViewModel.state.value.wordCount).isEqualTo(result)
         assertThat(blogContentViewModel.state.value.nthChar).isEmpty()
         assertThat(blogContentViewModel.state.value.everyNthChar).isEmpty()
-        assertThat(blogContentViewModel.state.value.isLoading).isFalse()
         assertThat(blogContentViewModel.state.value.errorMessage).isNull()
     }
 
@@ -173,9 +173,7 @@ class BlogContentViewModelTest {
         assertThat(blogContentViewModel.state.value.wordCount).isEmpty()
         assertThat(blogContentViewModel.state.value.nthChar).isEmpty()
         assertThat(blogContentViewModel.state.value.everyNthChar).isEmpty()
-        assertThat(blogContentViewModel.state.value.isLoading).isFalse()
         assertThat(blogContentViewModel.state.value.errorMessage).isNotNull()
         assertThat(blogContentViewModel.state.value.errorMessage).isEqualTo(sampleErrorResponse)
     }
 }
-

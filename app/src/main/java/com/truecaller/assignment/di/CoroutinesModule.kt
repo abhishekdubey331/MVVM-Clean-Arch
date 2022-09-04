@@ -15,6 +15,14 @@ import javax.inject.Qualifier
  *    As and when required
  */
 
+@Retention(AnnotationRetention.BINARY)
+@Qualifier
+annotation class IoDispatcher
+
+@Retention(AnnotationRetention.BINARY)
+@Qualifier
+annotation class MainDispatcher
+
 @InstallIn(SingletonComponent::class)
 @Module
 object CoroutinesModule {
@@ -26,11 +34,3 @@ object CoroutinesModule {
     @Provides
     fun providesMainDispatcher(): CoroutineDispatcher = Dispatchers.Main
 }
-
-@Retention(AnnotationRetention.BINARY)
-@Qualifier
-annotation class IoDispatcher
-
-@Retention(AnnotationRetention.BINARY)
-@Qualifier
-annotation class MainDispatcher

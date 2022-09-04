@@ -45,4 +45,3 @@ class BlogContentRepositoryTest {
         Mockito.verify(blogApi, Mockito.times(1)).fetchBlogContent()
     }
 }
-

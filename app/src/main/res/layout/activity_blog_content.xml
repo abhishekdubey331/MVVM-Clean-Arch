@@ -18,7 +18,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/side_margin"
-            android:text="@string/fetch_blog_content"
+            android:padding="@dimen/btn_padding"
+            android:text="@string/fetch_blog_content_str"
             android:textAllCaps="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -30,7 +31,8 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textColor="@color/design_default_color_error"
-            app:layout_constraintTop_toBottomOf="@id/button_blogScreen_fetchContent" />
+            app:layout_constraintTop_toBottomOf="@id/button_blogScreen_fetchContent"
+            tools:text="@string/message_something_went_wrong_str" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textview_blogScreen_10thCharTitle"
@@ -38,8 +40,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/side_margin"
             android:padding="@dimen/side_margin"
-            android:text="@string/first_req_title"
-            android:textStyle="bold"
+            android:text="@string/title_one_str"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textview_error_blogScreen" />
 
@@ -48,17 +50,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/side_margin"
+            android:textSize="@dimen/text_size_medium"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textview_blogScreen_10thCharTitle"
-            tools:text="@string/app_name" />
+            app:layout_constraintTop_toBottomOf="@id/textview_blogScreen_10thCharTitle" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textview_blogScreen_every10thCharTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/side_margin"
-            android:text="@string/second_req_title"
-            android:textStyle="bold"
+            android:text="@string/title_two_str"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textview_blogScreen_10thCharContent" />
 
@@ -67,9 +69,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/side_margin"
+            android:textSize="@dimen/text_size_medium"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textview_blogScreen_every10thCharTitle"
-            tools:text="@string/app_name" />
+            app:layout_constraintTop_toBottomOf="@id/textview_blogScreen_every10thCharTitle" />
 
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -77,8 +79,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/side_margin"
-            android:text="@string/third_req_title"
-            android:textStyle="bold"
+            android:text="@string/title_three_str"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textview_blogScreen_every10thCharContent" />
 
@@ -87,18 +89,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/side_margin"
+            android:textSize="@dimen/text_size_medium"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textview_blogScreen_wordCounterTitle"
-            tools:text="@string/app_name" />
-
-        <ProgressBar
-            android:id="@+id/progressBar_blogScreen"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/textview_blogScreen_wordCounterTitle" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -7,6 +7,7 @@ import com.truecaller.assignment.R
 interface StringUtils {
     fun noNetworkErrorMessage(): String
     fun somethingWentWrong(): String
+    fun loading(): String
 }
 
 class StringUtilsImpl(private val appContext: Application) : StringUtils {
@@ -15,5 +16,7 @@ class StringUtilsImpl(private val appContext: Application) : StringUtils {
 
     override fun somethingWentWrong() =
         appContext.getString(R.string.message_something_went_wrong_str)
-}
 
+    override fun loading() =
+        appContext.getString(R.string.loading_str)
+}

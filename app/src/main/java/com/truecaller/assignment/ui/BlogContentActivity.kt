@@ -1,7 +1,6 @@
 package com.truecaller.assignment.ui
 
 import android.os.Bundle
-import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
@@ -30,7 +29,6 @@ class BlogContentActivity : AppCompatActivity() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 blogContentViewModel.state.collect { uiState ->
-                    updateLoadingState(uiState.isLoading)
                     updateContent(uiState)
                 }
             }
@@ -42,13 +40,5 @@ class BlogContentActivity : AppCompatActivity() {
         binding.textviewBlogScreenEvery10thCharContent.text = uiState.everyNthChar
         binding.textviewBlogScreenWordCounterContent.text = uiState.wordCount
         binding.textviewErrorBlogScreen.text = uiState.errorMessage
-    }
-
-    private fun updateLoadingState(loading: Boolean) {
-        if (loading) {
-            binding.progressBarBlogScreen.visibility = View.VISIBLE
-        } else {
-            binding.progressBarBlogScreen.visibility = View.GONE
-        }
     }
 }

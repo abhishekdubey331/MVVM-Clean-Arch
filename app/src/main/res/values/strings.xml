@@ -1,10 +1,11 @@
 <resources>
     <string name="app_name">TruBlog App</string>
-    <string name="first_req_title">Truecaller 10th Character Request</string>
-    <string name="second_req_title">Truecaller Every 10th Character Request</string>
-    <string name="third_req_title">Truecaller Word Counter Request</string>
-    <string name="fetch_blog_content">Fetch Blog Content</string>
+    <string name="title_one_str">10th Character Request</string>
+    <string name="title_two_str">Every 10th Character Request</string>
+    <string name="title_three_str">Word Counter Request</string>
+    <string name="fetch_blog_content_str">Fetch Blog Content</string>
     <string name="message_something_went_wrong_str">Something went wrong!</string>
     <string name="message_no_network_connected_str">No network connected!</string>
+    <string name="loading_str">"Loading…"</string>
 
 </resources>

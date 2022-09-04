@@ -6,6 +6,7 @@ import com.truecaller.assignment.common.UiState
 import com.truecaller.assignment.domain.usecase.contract.GetEveryNthCharUseCase
 import com.truecaller.assignment.domain.usecase.contract.GetNthCharUseCase
 import com.truecaller.assignment.domain.usecase.contract.GetWordCounterUseCase
+import com.truecaller.assignment.utils.StringUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,7 +18,8 @@ import javax.inject.Inject
 class BlogContentViewModel @Inject constructor(
     private val getNthCharUseCase: GetNthCharUseCase,
     private val getEveryNthCharUseCase: GetEveryNthCharUseCase,
-    private val getWordCounterUseCase: GetWordCounterUseCase
+    private val getWordCounterUseCase: GetWordCounterUseCase,
+    private val stringUtils: StringUtils
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(BlogContentUiState())
@@ -28,14 +30,14 @@ class BlogContentViewModel @Inject constructor(
         getNthCharUseCase(n).collect { result ->
             _state.update {
                 when (result) {
-                    is UiState.Loading -> it.copy(isLoading = true, errorMessage = null)
-
-                    is UiState.Success -> it.copy(isLoading = false, nthChar = result.data)
-
-                    is UiState.Failure -> it.copy(
-                        isLoading = false,
-                        errorMessage = result.errorMessage
+                    is UiState.Loading -> it.copy(
+                        nthChar = stringUtils.loading(),
+                        errorMessage = null
                     )
+
+                    is UiState.Success -> it.copy(nthChar = result.data)
+
+                    is UiState.Failure -> it.copy(errorMessage = result.errorMessage)
                 }
             }
         }
@@ -45,14 +47,14 @@ class BlogContentViewModel @Inject constructor(
         getEveryNthCharUseCase(n).collect { result ->
             _state.update {
                 when (result) {
-                    is UiState.Loading -> it.copy(isLoading = true, errorMessage = null)
-
-                    is UiState.Success -> it.copy(isLoading = false, everyNthChar = result.data)
-
-                    is UiState.Failure -> it.copy(
-                        isLoading = false,
-                        errorMessage = result.errorMessage
+                    is UiState.Loading -> it.copy(
+                        everyNthChar = stringUtils.loading(),
+                        errorMessage = null
                     )
+
+                    is UiState.Success -> it.copy(everyNthChar = result.data)
+
+                    is UiState.Failure -> it.copy(errorMessage = result.errorMessage)
                 }
             }
         }
@@ -62,14 +64,14 @@ class BlogContentViewModel @Inject constructor(
         getWordCounterUseCase().collect { result ->
             _state.update {
                 when (result) {
-                    is UiState.Loading -> it.copy(isLoading = true, errorMessage = null)
-
-                    is UiState.Success -> it.copy(isLoading = false, wordCount = result.data)
-
-                    is UiState.Failure -> it.copy(
-                        isLoading = false,
-                        errorMessage = result.errorMessage
+                    is UiState.Loading -> it.copy(
+                        wordCount = stringUtils.loading(),
+                        errorMessage = null
                     )
+
+                    is UiState.Success -> it.copy(wordCount = result.data)
+
+                    is UiState.Failure -> it.copy(errorMessage = result.errorMessage)
                 }
             }
         }

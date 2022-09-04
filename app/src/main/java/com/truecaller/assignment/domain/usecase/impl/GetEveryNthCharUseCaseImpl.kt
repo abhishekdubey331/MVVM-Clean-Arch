@@ -34,6 +34,6 @@ class GetEveryNthCharUseCaseImpl @Inject constructor(
         for (i in n.minus(1)..blogContent.length step n) {
             append(blogContent[i].plus(","))
         }
-        this.deleteCharAt(this.length.minus(1))
+        deleteCharAt(this.length.minus(1))
     }
 }

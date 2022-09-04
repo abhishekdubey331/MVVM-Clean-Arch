@@ -38,7 +38,7 @@ class BlogContentActivity : AppCompatActivity() {
     }
 
     private fun updateContent(uiState: BlogContentUiState) {
-        binding.textviewBlogScreen10thCharContent.text = uiState.nthChar.toString()
+        binding.textviewBlogScreen10thCharContent.text = uiState.nthChar
         binding.textviewBlogScreenEvery10thCharContent.text = uiState.everyNthChar
         binding.textviewBlogScreenWordCounterContent.text = uiState.wordCount
         binding.textviewErrorBlogScreen.text = uiState.errorMessage

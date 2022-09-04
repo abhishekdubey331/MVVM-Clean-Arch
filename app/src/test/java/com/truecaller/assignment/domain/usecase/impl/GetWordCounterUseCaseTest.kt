@@ -4,7 +4,7 @@ import com.google.common.truth.Truth.assertThat
 import com.truecaller.assignment.common.UiState
 import com.truecaller.assignment.domain.repository.contract.BlogContentRepository
 import com.truecaller.assignment.domain.usecase.contract.GetWordCounterUseCase
-import com.truecaller.assignment.ui.base.MainCoroutinesRule
+import com.truecaller.assignment.MainCoroutinesRule
 import com.truecaller.assignment.utils.StringUtils
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.toList

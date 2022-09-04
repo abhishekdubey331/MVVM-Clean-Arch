@@ -8,6 +8,13 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import javax.inject.Qualifier
 
+/***
+ *
+ *    Currently Adding two dispatchers
+ *    Later can add Dispatchers.Default,Dispatchers.Unconfined
+ *    As and when required
+ */
+
 @InstallIn(SingletonComponent::class)
 @Module
 object CoroutinesModule {

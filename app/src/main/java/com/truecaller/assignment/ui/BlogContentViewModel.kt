@@ -8,7 +8,7 @@ import com.truecaller.assignment.domain.usecase.contract.GetNthCharUseCase
 import com.truecaller.assignment.domain.usecase.contract.GetWordCounterUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -22,7 +22,7 @@ class BlogContentViewModel @Inject constructor(
 
     private val _state = MutableStateFlow(BlogContentUiState())
 
-    val state: StateFlow<BlogContentUiState> = _state
+    val state = _state.asStateFlow()
 
     fun getNthChar(n: Int) = viewModelScope.launch {
         getNthCharUseCase(n).collect { result ->
@@ -47,7 +47,7 @@ class BlogContentViewModel @Inject constructor(
                 when (result) {
                     is UiState.Loading -> it.copy(isLoading = true, errorMessage = null)
 
-                    is UiState.Success -> it.copy(isLoading = false, everyNthChar = result.data!!)
+                    is UiState.Success -> it.copy(isLoading = false, everyNthChar = result.data)
 
                     is UiState.Failure -> it.copy(
                         isLoading = false,
@@ -64,7 +64,7 @@ class BlogContentViewModel @Inject constructor(
                 when (result) {
                     is UiState.Loading -> it.copy(isLoading = true, errorMessage = null)
 
-                    is UiState.Success -> it.copy(wordCount = result.data!!)
+                    is UiState.Success -> it.copy(wordCount = result.data)
 
                     is UiState.Failure -> it.copy(
                         isLoading = false,

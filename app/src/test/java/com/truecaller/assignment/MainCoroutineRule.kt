@@ -1,4 +1,4 @@
-package com.truecaller.assignment.ui.base
+package com.truecaller.assignment
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

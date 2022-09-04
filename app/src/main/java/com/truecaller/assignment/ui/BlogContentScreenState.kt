@@ -8,4 +8,3 @@ data class BlogContentUiState(
     val everyNthChar: String = "",
     val wordCount: String = ""
 )
-

@@ -2,11 +2,11 @@ package com.truecaller.assignment.ui
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.google.common.truth.Truth.assertThat
+import com.truecaller.assignment.MainCoroutinesRule
 import com.truecaller.assignment.common.UiState
 import com.truecaller.assignment.domain.usecase.contract.GetEveryNthCharUseCase
 import com.truecaller.assignment.domain.usecase.contract.GetNthCharUseCase
 import com.truecaller.assignment.domain.usecase.contract.GetWordCounterUseCase
-import com.truecaller.assignment.ui.base.MainCoroutinesRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
@@ -54,7 +54,7 @@ class BlogContentViewModelTest {
     }
 
     @Test
-    fun `test nth char`() = runTest {
+    fun `test nth char success`() = runTest {
         // Given
         val result = "K"
         val flow = flow {
@@ -67,14 +67,14 @@ class BlogContentViewModelTest {
 
         // Then
         assertThat(blogContentViewModel.state.value.nthChar).isEqualTo(result)
-        assertThat(blogContentViewModel.state.value.everyNthChar).isEqualTo("")
-        assertThat(blogContentViewModel.state.value.wordCount).isEqualTo("")
+        assertThat(blogContentViewModel.state.value.everyNthChar).isEmpty()
+        assertThat(blogContentViewModel.state.value.wordCount).isEmpty()
         assertThat(blogContentViewModel.state.value.isLoading).isFalse()
         assertThat(blogContentViewModel.state.value.errorMessage).isNull()
     }
 
     @Test
-    fun `test every nth char`() = runTest {
+    fun `test every nth char success`() = runTest {
         // Given
         val result = "test_string_with_every_nth_character"
         val flow = flow {
@@ -87,14 +87,14 @@ class BlogContentViewModelTest {
 
         // Then
         assertThat(blogContentViewModel.state.value.everyNthChar).isEqualTo(result)
-        assertThat(blogContentViewModel.state.value.nthChar).isEqualTo("")
-        assertThat(blogContentViewModel.state.value.wordCount).isEqualTo("")
+        assertThat(blogContentViewModel.state.value.nthChar).isEmpty()
+        assertThat(blogContentViewModel.state.value.wordCount).isEmpty()
         assertThat(blogContentViewModel.state.value.isLoading).isFalse()
         assertThat(blogContentViewModel.state.value.errorMessage).isNull()
     }
 
     @Test
-    fun `test word counter`() = runTest {
+    fun `test word counter success`() = runTest {
         // Given
         val result = "word_count"
         val flow = flow {
@@ -107,8 +107,8 @@ class BlogContentViewModelTest {
 
         // Then
         assertThat(blogContentViewModel.state.value.wordCount).isEqualTo(result)
-        assertThat(blogContentViewModel.state.value.nthChar).isEqualTo("")
-        assertThat(blogContentViewModel.state.value.everyNthChar).isEqualTo("")
+        assertThat(blogContentViewModel.state.value.nthChar).isEmpty()
+        assertThat(blogContentViewModel.state.value.everyNthChar).isEmpty()
         assertThat(blogContentViewModel.state.value.isLoading).isFalse()
         assertThat(blogContentViewModel.state.value.errorMessage).isNull()
     }
